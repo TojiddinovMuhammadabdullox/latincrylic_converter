@@ -16,3 +16,12 @@ class ConvertText extends ConversionEvent {
   @override
   List<Object> get props => [text, isLatinToCyrillic];
 }
+
+class ToggleConversionDirection extends ConversionEvent {
+  final bool isLatinToCyrillic;
+
+  const ToggleConversionDirection({required this.isLatinToCyrillic});
+
+  @override
+  List<Object> get props => [isLatinToCyrillic];
+}

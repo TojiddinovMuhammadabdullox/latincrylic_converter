@@ -39,7 +39,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   final TextEditingController _controller = TextEditingController();
-  bool _isLatinToCyrillic = true;
   late AnimationController _animationController;
   late Animation<double> _animation;
 
@@ -86,9 +85,9 @@ class _HomePageState extends State<HomePage>
             labelColor: Colors.white,
             unselectedLabelColor: Colors.deepPurpleAccent,
             onTap: (int index) {
-              setState(() {
-                _isLatinToCyrillic = index == 0;
-              });
+              context.read<ConversionBloc>().add(
+                    ToggleConversionDirection(isLatinToCyrillic: index == 0),
+                  );
               _convertText();
             },
           ),
@@ -202,7 +201,8 @@ class _HomePageState extends State<HomePage>
     context.read<ConversionBloc>().add(
           ConvertText(
             text: _controller.text,
-            isLatinToCyrillic: _isLatinToCyrillic,
+            isLatinToCyrillic:
+                context.read<ConversionBloc>().state.isLatinToCyrillic,
           ),
         );
   }
